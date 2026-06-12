@@ -31,6 +31,8 @@ services:
     volumes:
      -  n8n:/opt/n8n
      -  n8n-data:/data
+     # volume mount
+     -  ${PWD}:${PWD}
 
   n8n-runner:
     image: n8nio/runners:latest
