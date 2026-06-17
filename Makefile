@@ -5,7 +5,7 @@ w ?=${nDir}/workflow.json
 c ?=${nDir}/credentials.json
 
 start: _mkdir
-	TZ=${TZ} docker compose up -d
+	TZ=${TZ} wDir=${wDir} docker compose up -d
 
 stop:
 	docker compose down
@@ -25,6 +25,8 @@ import:
 
 shell:
 	docker compose exec -it n8n /bin/sh
+bash:
+	docker compose exec -it n8n /bin/bash
 
 _mkdir:
 	mkdir -p ${nDir}

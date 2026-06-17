@@ -12,6 +12,8 @@ services:
      - 5678:5678
 #    - 5679:5679
     user: root
+    working_dir: /opt/n8n
+#   command: n8n start
     environment:
      - TZ=${TZ}
      # n8n base folder  /home/node(/.n8n) => /opt/n8n/(.n8n) 
@@ -20,6 +22,12 @@ services:
      - N8N_CUSTOM_EXTENSIONS=/opt/n8n/.n8n/nodes
      # R/W access from n8n node, acceptable folder
      - N8N_RESTRICT_FILE_ACCESS_TO=/data
+     # allow to use modules
+     - NODE_FUNCTION_ALLOW_BUILTIN=*
+     - NODE_FUNCTION_ALLOW_EXTERNAL=*
+     - N8N_RUNNERS_STDLIB_ALLOW=*
+     - N8N_RUNNERS_EXTERNAL_ALLOW=*
+     #
      - N8N_HOST=0.0.0.0
      - N8N_SECURE_COOKIE=false
      # runner
@@ -31,14 +39,17 @@ services:
     volumes:
      -  n8n:/opt/n8n
      -  n8n-data:/data
-     # volume mount
-     -  ${PWD}:${PWD}
+     # mount host folder
+     -  ${wDir}:${wDir}
 
   n8n-runner:
     image: n8nio/runners:latest
     container_name: n8n-runner
     environment:
-      - N8N_RUNNERS_AUTH_TOKEN=your-secret-here
-      - N8N_RUNNERS_TASK_BROKER_URI=http://n8n:5679
+     - N8N_RUNNERS_AUTH_TOKEN=your-secret-here
+     - N8N_RUNNERS_TASK_BROKER_URI=http://n8n:5679
+     # allow to use modules
+     - N8N_RUNNERS_STDLIB_ALLOW=*
+     - N8N_RUNNERS_EXTERNAL_ALLOW=*
     depends_on:
-      - n8n
+     - n8n
