@@ -18,11 +18,12 @@ services:
      - TZ=${TZ}
      # n8n base folder  /home/node(/.n8n) => /opt/n8n/(.n8n) 
      - N8N_USER_FOLDER=/opt/n8n
-     # custom node install folder
-     - N8N_CUSTOM_EXTENSIONS=/opt/n8n/.n8n/nodes
+     # DONOT SET THIS VAR TO allow n8n custom install on UI. below causes failure on install from UI
+     #- N8N_CUSTOM_EXTENSIONS=/opt/n8n/.n8n/nodes
      # R/W access from n8n node, acceptable folder
      - N8N_RESTRICT_FILE_ACCESS_TO=/data
      # allow to use modules
+     - N8N_COMMUNITY_PACKAGES_ENABLED=true
      - NODE_FUNCTION_ALLOW_BUILTIN=*
      - NODE_FUNCTION_ALLOW_EXTERNAL=*
      - N8N_RUNNERS_STDLIB_ALLOW=*
