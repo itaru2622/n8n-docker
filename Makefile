@@ -3,6 +3,7 @@ nDir ?=${wDir}/workflows
 
 w ?=${nDir}/workflow.json
 c ?=${nDir}/credentials.json
+n ?=${nDir}/nodes.json
 
 start: _mkdir
 	TZ=${TZ} wDir=${wDir} docker compose up -d
@@ -13,10 +14,11 @@ stop:
 stop-with-clean:
 	docker compose down -v
 
-# HINT: make export w=anywhere/workflow.json  c=anywhere/credentials.json
+# HINT: make export w=anywhere/workflow.json  c=anywhere/credentials.json n=anywhere/nodes.json
 export:
 	 docker compose exec -it n8n  n8n export:workflow    --all              --output ${w}
 	-docker compose exec -it n8n  n8n export:credentials --all --decrypted  --output ${c}
+	-docker compose exec -it n8n  n8n export:nodes                          --output ${n}
 
 # HINT: make import w=anywhere/workflow.json  c=anywhere/credentials.json
 import:
